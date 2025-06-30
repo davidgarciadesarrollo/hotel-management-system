@@ -1,0 +1,25 @@
+{
+  "name": "hotel-management-system-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for the Hotel Management System",
+  "main": "src/index.js",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "vue": "^3.5.17",
+    "vue-router": "^4.0.0",
+    "bootstrap": "^5.3.3",
+    "@popperjs/core": "^2.11.8"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^4.5.0",
+    "eslint": "^7.0.0",
+    "eslint-plugin-vue": "^7.0.0"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
