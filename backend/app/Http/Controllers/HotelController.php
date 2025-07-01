@@ -41,6 +41,7 @@ class HotelController extends Controller
         // Validar que no haya acomodaciones repetidas para el mismo hotel
         if ($request->has('room_types')) {
             $this->validateUniqueAccommodations($request->room_types);
+            $this->validateTotalRooms($request->room_types, $request->numero_habitaciones);
         }
 
         $hotel = Hotel::create($request->all());
@@ -73,6 +74,7 @@ class HotelController extends Controller
         // Validar que no haya acomodaciones repetidas para el mismo hotel
         if ($request->has('room_types')) {
             $this->validateUniqueAccommodations($request->room_types, $hotel->id);
+            $this->validateTotalRooms($request->room_types, $request->numero_habitaciones);
         }
 
         $hotel->update($request->all());
@@ -129,6 +131,26 @@ class HotelController extends Controller
             
             $accommodations[] = $accommodation;
             $accommodationTypes[] = $type;
+        }
+    }
+
+    /**
+     * Valida que la suma de habitaciones por tipo sea exactamente igual al total del hotel
+     */
+    private function validateTotalRooms($roomTypes, $totalRooms)
+    {
+        $sumByType = 0;
+        foreach ($roomTypes as $roomType) {
+            $sumByType += (int) $roomType['quantity'];
+        }
+        
+        if ($sumByType !== (int) $totalRooms) {
+            $validator = validator([], []);
+            $validator->errors()->add(
+                'numero_habitaciones',
+                "Las cantidades no cuadran: tienes {$sumByType} habitaciones distribuidas por tipos, pero el hotel dice tener {$totalRooms} habitaciones en total. Estos números deben coincidir exactamente."
+            );
+            throw new \Illuminate\Validation\ValidationException($validator);
         }
     }
 }

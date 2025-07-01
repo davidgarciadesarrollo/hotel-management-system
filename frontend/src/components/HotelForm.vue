@@ -180,12 +180,13 @@ export default {
      * Emite eventos para refrescar la lista, actualizar el detalle y cerrar el formulario.
      */
     async submitForm() {
-      // Validación: la suma de habitaciones por tipo no debe superar el total
+      // Validación: la suma de habitaciones por tipo debe ser igual al total
       const total = this.hotel.roomTypes.reduce((sum, rt) => sum + Number(rt.quantity), 0);
-      if (total > Number(this.hotel.numero_habitaciones)) {
+      
+      if (total !== Number(this.hotel.numero_habitaciones)) {
         this.showWarningAlert(
-          'Cantidad excedida',
-          'La suma de habitaciones por tipo no puede superar el número total de habitaciones del hotel.'
+          'Las cantidades no cuadran',
+          `Tienes ${total} habitaciones distribuidas por tipos, pero el hotel dice tener ${this.hotel.numero_habitaciones} habitaciones en total. Estos números deben coincidir exactamente.`
         );
         return;
       }
@@ -237,11 +238,8 @@ export default {
         this.$emit('actualizarDetalle', this.hotel.id);
         this.$emit('close');
       } catch (error) {
-        console.log('Error completo:', error.response);
-        
         if (error.response && error.response.data && error.response.data.errors) {
           const errors = error.response.data.errors;
-          console.log('Errores recibidos:', errors);
           
           // Manejar error de NIT duplicado
           if (errors.nit) {
@@ -250,11 +248,16 @@ export default {
               'El NIT ingresado ya está registrado para otro hotel.'
             );
           }
+          // Manejar error de cantidad total de habitaciones
+          else if (errors.numero_habitaciones) {
+            this.showErrorAlert(
+              'Las cantidades no cuadran',
+              errors.numero_habitaciones[0]
+            );
+          }
           // Manejar errores de acomodaciones duplicadas
           else if (this.hasAccommodationErrors(errors)) {
-            console.log('Se detectó error de acomodación');
             const accommodationError = this.getAccommodationErrorMessage(errors);
-            console.log('Mensaje de error:', accommodationError);
             this.showErrorAlert(
               'Acomodación Duplicada',
               accommodationError
@@ -262,7 +265,6 @@ export default {
           }
           // Otros errores de validación
           else {
-            console.log('Otros errores de validación');
             const errorMessages = this.getValidationErrorMessages(errors);
             this.showErrorAlert(
               'Errores de validación',
@@ -270,7 +272,6 @@ export default {
             );
           }
         } else {
-          console.log('Error sin estructura de validación');
           this.showErrorAlert(
             'Error',
             'Error al guardar el hotel. Intenta nuevamente.'
@@ -285,7 +286,6 @@ export default {
      * @param {Object} hotel - Objeto hotel recibido (incluye room_types del backend)
      */
     setHotel(hotel) {
-      console.log('room_types que llegan:', hotel.room_types);
       const tipos = ['ESTANDAR', 'JUNIOR', 'SUITE'];
       const roomTypes = tipos.map(type => {
         if (hotel.room_types && hotel.room_types.length) {
