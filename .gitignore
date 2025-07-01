@@ -1,9 +1,116 @@
+# ==================================
+# HOTEL MANAGEMENT SYSTEM - GITIGNORE
+# ==================================
+
+# Dependency directories
 node_modules/
+vendor/
+frontend/node_modules/
+backend/vendor/
+
+# Environment files (NEVER COMMIT THESE!)
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# Build directories and artifacts
 dist/
+build/
 .cache/
+frontend/build/
+frontend/dist/
+
+# Laravel specific cache and generated files
+backend/bootstrap/cache/
+backend/storage/app/
+backend/storage/framework/cache/
+backend/storage/framework/sessions/
+backend/storage/framework/testing/
+backend/storage/framework/views/
+backend/storage/logs/
+backend/public/hot
+backend/public/storage
+backend/storage/*.key
+
+# React specific
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Package manager files
+package-lock.json
+yarn.lock
+composer.lock
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log.*
+
+# Security files
 *.pem
 *.key
-*.env
-*.log# Build files
-frontend/build/
-backend/.env
+*.p12
+*.pfx
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+
+# Testing
+coverage/
+.nyc_output/
+.coverage
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Miscellaneous
+.sass-cache/
+connect.lock
+typings/
+.eslintcache
