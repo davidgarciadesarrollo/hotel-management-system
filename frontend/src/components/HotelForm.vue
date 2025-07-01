@@ -237,17 +237,40 @@ export default {
         this.$emit('actualizarDetalle', this.hotel.id);
         this.$emit('close');
       } catch (error) {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors &&
-          error.response.data.errors.nit
-        ) {
-          this.showErrorAlert(
-            'NIT duplicado',
-            'El NIT ingresado ya está registrado para otro hotel.'
-          );
+        console.log('Error completo:', error.response);
+        
+        if (error.response && error.response.data && error.response.data.errors) {
+          const errors = error.response.data.errors;
+          console.log('Errores recibidos:', errors);
+          
+          // Manejar error de NIT duplicado
+          if (errors.nit) {
+            this.showErrorAlert(
+              'NIT duplicado',
+              'El NIT ingresado ya está registrado para otro hotel.'
+            );
+          }
+          // Manejar errores de acomodaciones duplicadas
+          else if (this.hasAccommodationErrors(errors)) {
+            console.log('Se detectó error de acomodación');
+            const accommodationError = this.getAccommodationErrorMessage(errors);
+            console.log('Mensaje de error:', accommodationError);
+            this.showErrorAlert(
+              'Acomodación Duplicada',
+              accommodationError
+            );
+          }
+          // Otros errores de validación
+          else {
+            console.log('Otros errores de validación');
+            const errorMessages = this.getValidationErrorMessages(errors);
+            this.showErrorAlert(
+              'Errores de validación',
+              errorMessages
+            );
+          }
         } else {
+          console.log('Error sin estructura de validación');
           this.showErrorAlert(
             'Error',
             'Error al guardar el hotel. Intenta nuevamente.'
@@ -309,7 +332,7 @@ export default {
       Swal.fire({
         icon: 'error',
         title: title,
-        text: text,
+        html: text, // Cambiado de 'text' a 'html' para permitir etiquetas HTML
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#dc3545'
       });
@@ -322,6 +345,42 @@ export default {
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#ffc107'
       });
+    },
+
+    /**
+     * Verifica si hay errores relacionados con acomodaciones duplicadas
+     */
+    hasAccommodationErrors(errors) {
+      return Object.keys(errors).some(key => 
+        key.includes('room_types') && key.includes('accommodation')
+      );
+    },
+
+    /**
+     * Extrae y formatea el mensaje de error de acomodación duplicada
+     */
+    getAccommodationErrorMessage(errors) {
+      for (const key in errors) {
+        if (key.includes('room_types') && key.includes('accommodation')) {
+          return errors[key][0]; // Retorna el primer mensaje de error
+        }
+      }
+      return 'Error en acomodaciones. Verifique que no haya acomodaciones duplicadas.';
+    },
+
+    /**
+     * Extrae y formatea múltiples mensajes de error de validación
+     */
+    getValidationErrorMessages(errors) {
+      const messages = [];
+      for (const field in errors) {
+        if (Array.isArray(errors[field])) {
+          messages.push(...errors[field]);
+        } else {
+          messages.push(errors[field]);
+        }
+      }
+      return messages.join('\n');
     },
   },
 };
