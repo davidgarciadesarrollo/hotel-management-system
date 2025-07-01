@@ -4,4 +4,6 @@ dist/
 *.pem
 *.key
 *.env
-*.log
+*.log# Build files
+frontend/build/
+backend/.env

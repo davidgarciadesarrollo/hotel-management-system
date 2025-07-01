@@ -1,46 +1,169 @@
 # Hotel Management System - Frontend
 
-Este documento proporciona información sobre la configuración y ejecución del frontend del sistema de gestión hotelera.
+Frontend desarrollado en React 18 para el sistema de gestión hotelera.
+
+## Tecnologías
+
+- **React 18.3.1** - Librería de interfaz de usuario
+- **React Router 6.28.0** - Enrutamiento SPA
+- **Bootstrap 5.3.3** - Framework CSS
+- **Bootstrap Icons 1.13.1** - Iconografía
+- **Axios 1.7.7** - Cliente HTTP para API
+- **SweetAlert2 11.6.12** - Alertas y modales
 
 ## Requisitos Previos
 
-Antes de comenzar, asegúrate de tener instalados los siguientes programas:
-
-- Node.js (versión 14 o superior)
-- npm (gestor de paquetes de Node.js)
+- Node.js 16+ y npm
+- Backend Laravel corriendo en puerto 8001
 
 ## Instalación
 
-1. Clona el repositorio en tu máquina local:
-   ```
-   git clone <URL_DEL_REPOSITORIO>
-   ```
-
-2. Navega al directorio del frontend:
-   ```
+1. Navega al directorio del frontend:
+   ```bash
    cd hotel-management-system/frontend
    ```
 
-3. Instala las dependencias del proyecto:
-   ```
+2. Instala las dependencias del proyecto:
+   ```bash
    npm install
+   ```
+
+3. Crea archivo `.env` para configuración:
+   ```bash
+   echo "PORT=3003" > .env
    ```
 
 ## Ejecución
 
-Para iniciar la aplicación en modo de desarrollo, ejecuta el siguiente comando:
+### Modo Desarrollo
+```bash
+npm start
 ```
-npm run serve
-```
+Accede a la aplicación en `http://localhost:3003`
 
-Esto iniciará un servidor de desarrollo y podrás acceder a la aplicación en tu navegador en la dirección `http://localhost:8080`.
+### Modo Producción
+```bash
+npm run build
+npm install -g serve
+serve -s build
+```
 
 ## Estructura del Proyecto
 
-- **src/components**: Contiene los componentes de Vue.js, como el formulario para ingresar información de hoteles.
-- **src/views**: Contiene las vistas de la aplicación, donde se muestra la lista de hoteles.
-- **src/router**: Configura las rutas de la aplicación para navegar entre diferentes vistas.
-- **src/services**: Contiene funciones para interactuar con la API del backend.
+```
+frontend/
+├── public/
+│   └── index.html                     # HTML base
+├── src/
+│   ├── components/
+│   │   ├── Navbar.js                  # Navegación principal
+│   │   └── HotelForm.js              # Formulario de hoteles
+│   ├── views/
+│   │   ├── HotelsView.js             # Lista de hoteles
+│   │   └── RoomTypesView.js          # Lista de tipos de habitación
+│   ├── services/
+│   │   └── api.js                    # Cliente API para backend
+│   ├── App.js                        # Componente principal
+│   ├── App.css                       # Estilos globales
+│   └── index.js                      # Punto de entrada
+├── package.json                      # Dependencias y scripts
+└── .env                             # Variables de entorno
+```
+
+## Funcionalidades
+
+### Gestión de Hoteles
+- ✅ Listar todos los hoteles
+- ✅ Crear nuevos hoteles
+- ✅ Editar hoteles existentes
+- ✅ Eliminar hoteles
+- ✅ Ver detalles de tipos de habitación
+
+### Gestión de Tipos de Habitación
+- ✅ Listar tipos de habitación por hotel
+- ✅ Ver información completa (tipo, cantidad, acomodación)
+- ✅ Datos relacionados con hoteles
+
+### Características Técnicas
+- ✅ Diseño responsive con Bootstrap 5
+- ✅ Navegación SPA con React Router
+- ✅ Manejo de estado con React Hooks
+- ✅ Alertas elegantes con SweetAlert2
+- ✅ Indicadores de carga
+- ✅ Manejo de errores
+
+## API Endpoints Utilizados
+
+- `GET /api/hotels` - Obtener hoteles
+- `POST /api/hotels` - Crear hotel
+- `PUT /api/hotels/{id}` - Actualizar hotel
+- `DELETE /api/hotels/{id}` - Eliminar hotel
+- `GET /api/room-types` - Obtener tipos de habitación
+
+## Configuración de Desarrollo
+
+### Variables de Entorno (.env)
+```env
+PORT=3003
+REACT_APP_API_URL=http://localhost:8001
+```
+
+### Scripts Disponibles
+```json
+{
+  "start": "Servidor de desarrollo",
+  "build": "Build para producción", 
+  "test": "Ejecutar tests",
+  "eject": "Exponer configuración webpack"
+}
+```
+
+## Componentes Principales
+
+### App.js
+- Componente raíz
+- Configuración de rutas
+- Layout general
+
+### HotelsView.js  
+- Lista de hoteles
+- CRUD completo
+- Paginación y filtros
+
+### RoomTypesView.js
+- Vista de tipos de habitación
+- Información detallada
+- Relación con hoteles
+
+### HotelForm.js
+- Formulario para crear/editar
+- Validaciones en tiempo real
+- Manejo de tipos de habitación
+
+## Estilos y UI
+
+- **Bootstrap 5**: Grid system, componentes
+- **Bootstrap Icons**: Iconografía consistente
+- **CSS Custom**: Estilos específicos
+- **Responsive Design**: Mobile-first approach
+
+## Testing
+
+```bash
+npm test
+```
+
+## Build y Deployment
+
+```bash
+npm run build
+```
+
+Genera carpeta `build/` con archivos optimizados:
+- JavaScript minificado y comprimido
+- CSS optimizado  
+- Assets con hash para cache-busting
+- HTML con referencias actualizadas
 
 ## Contribuciones
 

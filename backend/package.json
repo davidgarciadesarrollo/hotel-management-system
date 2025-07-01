@@ -10,13 +10,14 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "axios": "^1.10.0",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14"
     },
     "dependencies": {
         "bootstrap": "^5.3.7",
+        "sweetalert2": "^11.6.12",
         "vue": "^3.5.17"
     }
 }

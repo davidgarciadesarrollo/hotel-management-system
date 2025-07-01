@@ -1,0 +1,61 @@
+# 📄 Licencia MIT
+
+**Hotel Management System**
+
+Copyright (c) 2024 Hotel Management System Contributors
+
+Se concede permiso, libre de cargos, a cualquier persona que obtenga una copia de este software y de los archivos de documentación asociados (el "Software"), a utilizar el Software sin restricción, incluyendo sin limitación los derechos a usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar, y/o vender copias del Software, y a permitir a las personas a las que se les proporcione el Software a hacer lo mismo, sujeto a las siguientes condiciones:
+
+El aviso de copyright anterior y este aviso de permiso se incluirán en todas las copias o partes sustanciales del Software.
+
+EL SOFTWARE SE PROPORCIONA "COMO ESTÁ", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO PARTICULAR E INCUMPLIMIENTO. EN NINGÚN CASO LOS AUTORES O PROPIETARIOS DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑOS U OTRAS RESPONSABILIDADES, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O CUALQUIER OTRO MOTIVO, DERIVADAS DE, FUERA DE O EN CONEXIÓN CON EL SOFTWARE O SU USO U OTRO TIPO DE ACCIONES EN EL SOFTWARE.
+
+---
+
+## 📋 Resumen de la Licencia
+
+### ✅ **Permitido**
+- ✅ Uso comercial
+- ✅ Modificación
+- ✅ Distribución
+- ✅ Uso privado
+
+### ❌ **Limitaciones**
+- ❌ Responsabilidad
+- ❌ Garantía
+
+### 📝 **Condiciones**
+- 📝 Incluir aviso de licencia y copyright
+- 📝 Preservar aviso de copyright en código modificado
+
+---
+
+## 🔗 **Dependencias y Licencias de Terceros**
+
+### Backend (Laravel/PHP)
+- **Laravel Framework** - MIT License
+- **PHP** - PHP License v3.01
+- **Composer packages** - Diversas licencias (ver composer.json)
+
+### Frontend (React/JavaScript)
+- **React** - MIT License
+- **Bootstrap** - MIT License
+- **Axios** - MIT License
+- **NPM packages** - Diversas licencias (ver package.json)
+
+### Base de Datos
+- **MySQL** - GPL v2 License
+- **PostgreSQL** - PostgreSQL License
+
+---
+
+## 📞 **Contacto Legal**
+
+Para preguntas relacionadas con licencias o uso comercial:
+- Revisa la documentación de dependencias individuales
+- Consulta con tu departamento legal si es uso empresarial
+- Verifica compatibilidad de licencias para redistribución
+
+---
+
+*Esta licencia se aplica al código fuente del Hotel Management System. Las dependencias de terceros mantienen sus propias licencias.*

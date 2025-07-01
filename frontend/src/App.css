@@ -1,0 +1,32 @@
+.App {
+  font-family: Arial, sans-serif;
+}
+
+/* Estilos adicionales para el sistema de gestión hotelera */
+.card {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: none;
+  border-radius: 8px;
+}
+
+.btn {
+  border-radius: 6px;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  border-top: none;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.alert {
+  border-radius: 6px;
+}

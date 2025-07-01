@@ -14,14 +14,8 @@ class AddUniqueAccommodationConstraintToRoomTypesTable extends Migration
     public function up()
     {
         Schema::table('room_types', function (Blueprint $table) {
-            // Eliminar la restricción anterior si existe
-            try {
-                $table->dropUnique('room_types_unique_constraint');
-            } catch (Exception $e) {
-                // La restricción no existe, continuar
-            }
-            
-            // Añadir restricción única solo para hotel_id + accommodation
+            // Añadir restricción única para hotel_id + accommodation
+            // Esto asegura que una acomodación sea única por hotel
             $table->unique(['hotel_id', 'accommodation'], 'room_types_accommodation_unique');
         });
     }

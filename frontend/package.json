@@ -2,25 +2,42 @@
   "name": "hotel-management-system-frontend",
   "version": "1.0.0",
   "description": "Frontend for the Hotel Management System",
-  "main": "src/index.js",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
+  "private": true,
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "axios": "^0.21.1",
+    "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.13.1",
-    "sweetalert2": "^11.22.2",
-    "vue": "^3.5.17",
-    "vue-router": "^4.0.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "react-scripts": "5.0.1",
+    "sweetalert2": "11.6.12",
+    "web-vitals": "^4.2.4"
   },
-  "devDependencies": {
-    "@vue/cli-service": "^4.5.0",
-    "eslint": "^7.0.0",
-    "eslint-plugin-vue": "^7.0.0"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "author": "Your Name",
   "license": "MIT"

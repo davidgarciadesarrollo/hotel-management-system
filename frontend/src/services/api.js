@@ -5,11 +5,18 @@ import axios from 'axios';
 
 // URL base de la API de hoteles
 const API_URL = 'http://localhost:8001/api/hotels';
+const ROOM_TYPES_API_URL = 'http://localhost:8001/api/room-types';
 
-export default {
+const apiService = {
   // Obtiene todos los hoteles
   getHotels() {
-    return axios.get(API_URL).then(res => res.data);
+    return axios.get(API_URL)
+      .then(res => {
+        return res.data;
+      })
+      .catch(error => {
+        throw error;
+      });
   },
   // Crea un hotel
   createHotel(data) {
@@ -22,5 +29,11 @@ export default {
   // Elimina un hotel por ID
   deleteHotel(id) {
     return axios.delete(`${API_URL}/${id}`);
+  },
+  // Obtiene todos los tipos de habitación
+  getRoomTypes() {
+    return axios.get(ROOM_TYPES_API_URL).then(res => res.data);
   }
 };
+
+export default apiService;
