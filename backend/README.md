@@ -1,53 +1,365 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# 🏨 Backend - Sistema de Gestión Hotelera
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Framework:** Laravel 8.83.27+  
+**PHP:** 7.3+ / 8.0+  
+**Base de datos:** PostgreSQL / MySQL  
+**Versión:** 2.1
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Descripción
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Backend desarrollado en Laravel que proporciona una API RESTful completa para la gestión de hoteles y tipos de habitación. Incluye validaciones avanzadas de reglas de negocio y compatibilidad tipo-acomodación.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Características Principales
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🏨 **Gestión de Hoteles**
+- CRUD completo de hoteles
+- Validación de datos tributarios (NIT)
+- Gestión de ubicación (ciudad, dirección)
+- Control de número de habitaciones
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🛏️ **Gestión de Tipos de Habitación**
+- CRUD completo de tipos de habitación
+- **NUEVA**: Validación automática de compatibilidad tipo-acomodación
+- Validación de acomodaciones únicas por hotel
+- Mensajes de error descriptivos y orientados a la solución
 
-## Laravel Sponsors
+### 🎯 **Validaciones de Negocio**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### **Reglas de Compatibilidad Tipo-Acomodación**
+| Tipo de Habitación | Acomodaciones Permitidas |
+|-------------------|-------------------------|
+| **ESTÁNDAR** | SENCILLA, DOBLE |
+| **JUNIOR** | TRIPLE, CUÁDRUPLE |
+| **SUITE** | SENCILLA, DOBLE, TRIPLE |
 
-### Premium Partners
+#### **Reglas de Unicidad**
+- Una acomodación solo puede existir una vez por hotel
+- Validación automática en creación y actualización
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+#### **Validación de Capacidad (NUEVA en v2.1.1)**
+- La suma de cantidades de tipos de habitación no puede exceder el total del hotel
+- Validación en tiempo real con información visual de capacidad
+- Mensajes descriptivos con habitaciones disponibles
 
-## Contributing
+---
+
+## 🔧 Arquitectura y Estructura
+
+### **Controladores Principales**
+
+#### `app/Http/Controllers/HotelController.php`
+- Gestión CRUD de hoteles
+- Validación de datos tributarios
+- Manejo de relaciones con tipos de habitación
+
+#### `app/Http/Controllers/RoomTypeController.php`
+- Gestión CRUD de tipos de habitación
+- **NUEVO**: Método `validateTypeAccommodationCompatibility()`
+- Validación de acomodaciones únicas
+- Manejo avanzado de errores
+
+### **Modelos**
+
+#### `app/Models/Hotel.php`
+```php
+class Hotel extends Model
+{
+    protected $fillable = [
+        'nombre', 'direccion', 'ciudad', 
+        'nit', 'numero_habitaciones'
+    ];
+    
+    public function roomTypes()
+    {
+        return $this->hasMany(RoomType::class);
+    }
+}
+```
+
+#### `app/Models/RoomType.php`
+```php
+class RoomType extends Model
+{
+    protected $fillable = [
+        'type', 'quantity', 'accommodation', 'hotel_id'
+    ];
+    
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class);
+    }
+}
+```
+
+---
+
+## 🛠️ Instalación y Configuración
+
+### **1. Dependencias**
+```bash
+composer install
+```
+
+### **2. Configuración de Entorno**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### **3. Variables de Entorno (.env)**
+```env
+# Base de datos
+DB_CONNECTION=pgsql  # o mysql
+DB_HOST=127.0.0.1
+DB_PORT=5432         # o 3306 para MySQL
+DB_DATABASE=db_hoteles
+DB_USERNAME=postgres
+DB_PASSWORD=tu_password
+
+# Aplicación
+APP_NAME="Hotel Management System"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8001
+
+# CORS (para frontend React)
+CORS_ALLOWED_ORIGINS="http://localhost:3003"
+```
+
+### **4. Base de Datos**
+```bash
+# Ejecutar migraciones
+php artisan migrate
+
+# (Opcional) Cargar datos de prueba
+php artisan db:seed
+```
+
+### **5. Iniciar Servidor**
+```bash
+php artisan serve --port=8001
+```
+
+---
+
+## 📡 API Endpoints
+
+### **Hoteles**
+```http
+GET    /api/hotels          # Listar hoteles
+POST   /api/hotels          # Crear hotel
+PUT    /api/hotels/{id}     # Actualizar hotel
+DELETE /api/hotels/{id}     # Eliminar hotel
+```
+
+### **Tipos de Habitación**
+```http
+GET    /api/room-types      # Listar tipos
+POST   /api/room-types      # Crear tipo (con validación de compatibilidad)
+PUT    /api/room-types/{id} # Actualizar tipo (con validación)
+DELETE /api/room-types/{id} # Eliminar tipo
+```
+
+---
+
+## 🧪 Validaciones Implementadas
+
+### **Validación de Compatibilidad (NUEVA en v2.1)**
+
+```php
+/**
+ * Validar compatibilidad entre tipo de habitación y acomodación
+ */
+private function validateTypeAccommodationCompatibility($type, $accommodation)
+{
+    $compatibilityRules = [
+        'ESTÁNDAR' => ['SENCILLA', 'DOBLE'],
+        'JUNIOR' => ['TRIPLE', 'CUÁDRUPLE'],
+        'SUITE' => ['SENCILLA', 'DOBLE', 'TRIPLE']
+    ];
+
+    if (!in_array($accommodation, $compatibilityRules[$type])) {
+        throw ValidationException::withMessages([
+            'accommodation' => [
+                "🚫 INCOMPATIBILIDAD: La acomodación '{$accommodation}' no es compatible..."
+            ]
+        ]);
+    }
+}
+```
+
+### **Casos de Uso**
+
+#### ✅ **Válidos**
+```bash
+# Estándar con Doble
+POST /api/room-types
+{
+  "type": "ESTÁNDAR",
+  "accommodation": "DOBLE",
+  "hotel_id": 1,
+  "quantity": 5
+}
+
+# Junior con Triple
+POST /api/room-types
+{
+  "type": "JUNIOR", 
+  "accommodation": "TRIPLE",
+  "hotel_id": 1,
+  "quantity": 2
+}
+```
+
+#### ❌ **Inválidos**
+```bash
+# Junior con Sencilla (incompatible)
+POST /api/room-types
+{
+  "type": "JUNIOR",
+  "accommodation": "SENCILLA",  # ❌ Error 422
+  "hotel_id": 1,
+  "quantity": 3
+}
+
+# Capacidad excedida (hotel con 15 hab, ya tiene 12 asignadas)
+POST /api/room-types
+{
+  "type": "SUITE",
+  "accommodation": "DOBLE",
+  "hotel_id": 1,
+  "quantity": 5  # ❌ Error 422 - Solo disponibles 3
+}
+```
+
+---
+
+## 🔧 Configuración CORS
+
+Para permitir requests desde el frontend React:
+
+**Archivo:** `config/cors.php`
+```php
+return [
+    'paths' => ['api/*'],
+    'allowed_methods' => ['*'],
+    'allowed_origins' => ['http://localhost:3003'],
+    'allowed_headers' => ['*'],
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => false,
+];
+```
+
+---
+
+## 🧪 Testing
+
+### **Ejecutar Tests**
+```bash
+php artisan test
+```
+
+### **Tests de Validación de Compatibilidad**
+```bash
+# Test específico para validaciones
+php artisan test --filter RoomTypeCompatibilityTest
+```
+
+---
+
+## 📝 Logs y Debugging
+
+### **Logs de Aplicación**
+```bash
+# Ver logs en tiempo real
+tail -f storage/logs/laravel.log
+```
+
+### **Debug de Queries**
+```php
+// En cualquier controlador
+DB::enableQueryLog();
+// ... tu código ...
+dd(DB::getQueryLog());
+```
+
+---
+
+## 🚀 Despliegue en Producción
+
+### **Optimizaciones**
+```bash
+# Cache de configuración
+php artisan config:cache
+
+# Cache de rutas
+php artisan route:cache
+
+# Cache de vistas
+php artisan view:cache
+
+# Optimización de autoloader
+composer install --optimize-autoloader --no-dev
+```
+
+### **Variables de Producción**
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://tu-dominio.com
+
+# Base de datos de producción
+DB_CONNECTION=pgsql
+DB_HOST=tu-servidor-db
+DB_DATABASE=hotel_management_prod
+```
+
+---
+
+## 📚 Documentación Adicional
+
+- **README principal**: `../README.md`
+- **Frontend**: `../frontend/README.md`
+- **Changelog**: `../CHANGELOG.md`
+
+---
+
+## 🔧 Mantenimiento
+
+### **Comandos Útiles**
+```bash
+# Limpiar cache
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+
+# Recrear base de datos
+php artisan migrate:fresh --seed
+
+# Verificar configuración
+php artisan config:show database
+```
+
+---
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit tus cambios (`git commit -am 'Add nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
+---
+
+**Backend actualizado:** 1 de julio de 2025  
+**Versión Laravel:** 8.83.27+  
+**Próxima versión:** 2.2 (Sistema de reservas)
 
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 

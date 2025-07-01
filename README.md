@@ -307,6 +307,8 @@ npm install
 - ✅ Configurar acomodaciones
 - ✅ Asignar a hoteles específicos
 - ✅ Gestión de cantidades
+- ✅ **NUEVO**: Validación de compatibilidad tipo-acomodación
+- ✅ **NUEVO**: Reglas de negocio automáticas para combinaciones lógicas
 
 ### 💻 **Interfaz de Usuario**
 - ✅ Diseño responsivo con Bootstrap 5
@@ -362,6 +364,63 @@ cp -r build/* /var/www/html/
 - **Base de datos**: Índice único `hotel_id + accommodation`
 - **Validación**: En controllers de hoteles y tipos de habitación
 - **Mensajes**: Errores claros indicando el conflicto específico
+
+---
+
+## 🎯 **NUEVA FUNCIONALIDAD: Validación de Compatibilidad Tipo-Acomodación**
+
+### 📋 **Reglas de Compatibilidad Implementadas**
+
+La aplicación ahora valida automáticamente que las acomodaciones sean lógicamente compatibles con cada tipo de habitación:
+
+| Tipo de Habitación | Acomodaciones Permitidas |
+|-------------------|-------------------------|
+| **ESTÁNDAR** | SENCILLA, DOBLE |
+| **JUNIOR** | TRIPLE, CUÁDRUPLE |
+| **SUITE** | SENCILLA, DOBLE, TRIPLE |
+
+### ✅ **Ejemplos de Combinaciones VÁLIDAS:**
+- ✅ Habitación ESTÁNDAR con acomodación SENCILLA
+- ✅ Habitación ESTÁNDAR con acomodación DOBLE
+- ✅ Habitación JUNIOR con acomodación TRIPLE
+- ✅ Habitación JUNIOR con acomodación CUÁDRUPLE
+- ✅ Habitación SUITE con acomodación SENCILLA
+- ✅ Habitación SUITE con acomodación DOBLE
+- ✅ Habitación SUITE con acomodación TRIPLE
+
+### ❌ **Ejemplos de Combinaciones NO VÁLIDAS:**
+- ❌ Habitación ESTÁNDAR con acomodación TRIPLE
+- ❌ Habitación ESTÁNDAR con acomodación CUÁDRUPLE
+- ❌ Habitación JUNIOR con acomodación SENCILLA
+- ❌ Habitación JUNIOR con acomodación DOBLE
+- ❌ Habitación SUITE con acomodación CUÁDRUPLE
+
+### 🔧 **Implementación Técnica:**
+
+#### **Backend (Laravel)**
+- **Archivo**: `backend/app/Http/Controllers/RoomTypeController.php`
+- **Método**: `validateTypeAccommodationCompatibility()`
+- **Validación en**: Creación y actualización de tipos de habitación
+- **Respuesta**: Mensajes de error descriptivos con acomodaciones permitidas
+
+#### **Frontend (React)**
+- **Archivo**: `frontend/src/components/RoomTypeForm.js`
+- **Funcionalidades**:
+  - Filtrado dinámico de acomodaciones según tipo seleccionado
+  - Reseteo automático de acomodación al cambiar tipo
+  - Validación en tiempo real
+  - Texto de ayuda contextual
+
+#### **Interfaz de Usuario**
+- **Panel de reglas**: Botón "Reglas" en la vista de tipos de habitación
+- **Ayuda visual**: Cards que muestran las combinaciones permitidas
+- **Validación preventiva**: Solo se muestran opciones válidas
+
+### 💡 **Beneficios**
+1. **Prevención de errores**: Evita combinaciones ilógicas
+2. **Experiencia mejorada**: Interfaz intuitiva y guiada
+3. **Integridad de datos**: Validación doble (frontend + backend)
+4. **Mensajes claros**: Feedback específico al usuario
 
 ---
 
@@ -438,6 +497,7 @@ DB_PASSWORD=password_seguro
 Para más información consulta:
 - **Backend:** [README del backend](./backend/README.md)
 - **Frontend:** [README del frontend](./frontend/README.md)
+- **Cambios:** [CHANGELOG](./CHANGELOG.md)
 
 ---
 

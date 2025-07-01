@@ -6,10 +6,17 @@ import Swal from 'sweetalert2';
 const RoomTypesView = () => {
   const [roomTypes, setRoomTypes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [formKey, setFormKey] = useState(0);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [roomTypeDetalle, setRoomTypeDetalle] = useState(null);
+  const [showCompatibilityHelp, setShowCompatibilityHelp] = useState(false);
   const roomTypeFormRef = useRef();
+
+  // Reglas de compatibilidad tipo-acomodación
+  const compatibilityRules = {
+    'ESTÁNDAR': ['SENCILLA', 'DOBLE'],
+    'JUNIOR': ['TRIPLE', 'CUÁDRUPLE'],
+    'SUITE': ['SENCILLA', 'DOBLE', 'TRIPLE']
+  };
 
   // Carga la lista de tipos de habitación
   const fetchRoomTypes = async () => {
@@ -32,66 +39,13 @@ const RoomTypesView = () => {
 
   // Abre el formulario para editar un tipo de habitación
   const editRoomType = async (roomType) => {
-    setShowForm(true);
+    setShowEditForm(true);
     setTimeout(() => {
       if (roomTypeFormRef.current) {
         roomTypeFormRef.current.setRoomType(roomType);
       }
     }, 0);
     verDetalle(roomType);
-  };
-
-  // Abre el formulario para agregar un nuevo tipo de habitación
-  const agregarRoomType = () => {
-    setFormKey(formKey + 1);
-    setShowForm(true);
-    setTimeout(() => {
-      if (roomTypeFormRef.current) {
-        roomTypeFormRef.current.setRoomType({
-          id: null,
-          type: '',
-          quantity: 1,
-          accommodation: '',
-          hotel_id: ''
-        });
-      }
-    }, 0);
-  };
-
-  // Elimina un tipo de habitación tras confirmación
-  const deleteRoomType = async (id) => {
-    const result = await Swal.fire({
-      title: '¿Seguro que deseas eliminar este tipo de habitación?',
-      text: 'Esta acción no se puede deshacer.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
-    });
-
-    if (result.isConfirmed) {
-      try {
-        await api.deleteRoomType(id);
-        await fetchRoomTypes();
-        Swal.fire({
-          icon: 'success',
-          title: '¡Eliminado!',
-          text: 'El tipo de habitación ha sido eliminado correctamente.',
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#198754'
-        });
-      } catch (error) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'No se pudo eliminar el tipo de habitación. Intenta nuevamente.',
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#dc3545'
-        });
-      }
-    }
   };
 
   // Muestra el detalle del tipo de habitación seleccionado
@@ -124,22 +78,106 @@ const RoomTypesView = () => {
                 Tipos de Habitación por Hotel
               </h2>
             </div>
-            <div className="col-12 col-md-4 mt-3 mt-md-0 d-flex justify-content-center justify-content-md-end">
-              <button className="btn btn-success fw-semibold" onClick={agregarRoomType}>
-                <i className="bi bi-plus-circle me-2"></i>
-                Agregar Tipo de Habitación
+            <div className="col-12 col-md-4 mt-3 mt-md-0 d-flex justify-content-center justify-content-md-end gap-2">
+              <button 
+                className="btn btn-outline-light fw-semibold" 
+                onClick={() => setShowCompatibilityHelp(!showCompatibilityHelp)}
+              >
+                <i className="bi bi-question-circle me-2"></i>
+                Reglas
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Formulario de tipo de habitación */}
-      {showForm && (
+      {/* Panel de Reglas de Compatibilidad */}
+      {showCompatibilityHelp && (
+        <div className="alert alert-info alert-dismissible fade show mb-4" role="alert">
+          <div className="d-flex align-items-start">
+            <i className="bi bi-info-circle-fill me-3 fs-4 text-info"></i>
+            <div className="flex-grow-1">
+              <h5 className="alert-heading fw-bold">
+                <i className="bi bi-gear-fill me-2"></i>
+                Reglas de Compatibilidad - Tipos de Habitación y Acomodaciones
+              </h5>
+              <hr className="my-3" />
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="card h-100 border-secondary">
+                    <div className="card-header bg-secondary text-white text-center">
+                      <strong>ESTÁNDAR</strong>
+                    </div>
+                    <div className="card-body">
+                      <ul className="list-unstyled mb-0">
+                        {compatibilityRules['ESTÁNDAR'].map(acc => (
+                          <li key={acc}>
+                            <i className="bi bi-check-circle-fill text-success me-2"></i>
+                            {acc}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="card h-100 border-info">
+                    <div className="card-header bg-info text-white text-center">
+                      <strong>JUNIOR</strong>
+                    </div>
+                    <div className="card-body">
+                      <ul className="list-unstyled mb-0">
+                        {compatibilityRules['JUNIOR'].map(acc => (
+                          <li key={acc}>
+                            <i className="bi bi-check-circle-fill text-success me-2"></i>
+                            {acc}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="card h-100 border-warning">
+                    <div className="card-header bg-warning text-dark text-center">
+                      <strong>SUITE</strong>
+                    </div>
+                    <div className="card-body">
+                      <ul className="list-unstyled mb-0">
+                        {compatibilityRules['SUITE'].map(acc => (
+                          <li key={acc}>
+                            <i className="bi bi-check-circle-fill text-success me-2"></i>
+                            {acc}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3">
+                <small className="text-muted">
+                  <i className="bi bi-lightbulb me-1"></i>
+                  <strong>Nota:</strong> Estas reglas garantizan que las acomodaciones sean lógicamente compatibles con cada tipo de habitación. 
+                  Por ejemplo, una habitación ESTÁNDAR no puede tener acomodación CUÁDRUPLE.
+                </small>
+              </div>
+            </div>
+          </div>
+          <button 
+            type="button" 
+            className="btn-close" 
+            onClick={() => setShowCompatibilityHelp(false)}
+            aria-label="Close"
+          ></button>
+        </div>
+      )}
+
+      {/* Formulario de edición de tipo de habitación */}
+      {showEditForm && (
         <RoomTypeForm
           ref={roomTypeFormRef}
-          key={formKey}
-          onClose={() => setShowForm(false)}
+          onClose={() => setShowEditForm(false)}
           onRefresh={fetchRoomTypes}
           onActualizarDetalle={actualizarDetalleRoomType}
         />
@@ -189,9 +227,6 @@ const RoomTypesView = () => {
                         <div className="d-flex justify-content-center gap-2">
                           <button className="btn btn-sm btn-primary" onClick={() => editRoomType(rt)} title="Editar">
                             <i className="bi bi-pencil-fill"></i>
-                          </button>
-                          <button className="btn btn-sm btn-danger" onClick={() => deleteRoomType(rt.id)} title="Eliminar">
-                            <i className="bi bi-trash-fill"></i>
                           </button>
                           <button className="btn btn-sm btn-secondary" onClick={() => verDetalle(rt)} title="Ver Detalle">
                             <i className="bi bi-eye-fill"></i>
