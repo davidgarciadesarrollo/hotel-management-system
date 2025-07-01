@@ -98,7 +98,7 @@ DB_HOST=127.0.0.1
 DB_PORT=5432         # o 3306 para MySQL
 DB_DATABASE=db_hoteles
 DB_USERNAME=postgres # o tu usuario MySQL
-DB_PASSWORD=tu_password
+DB_PASSWORD=tu_password # si no tiene contraseña dejar vacío
 
 # Verificar configuración
 php artisan config:clear
