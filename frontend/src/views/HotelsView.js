@@ -16,7 +16,9 @@ const HotelsView = () => {
     try {
       setLoading(true);
       const hotelesData = await api.getHotels();
-      setHoteles(hotelesData.sort((a, b) => b.id - a.id));
+      const hotelesOrdenados = hotelesData.sort((a, b) => b.id - a.id);
+      setHoteles(hotelesOrdenados);
+      return hotelesOrdenados; // Devolver los datos para uso en callbacks
     } catch (error) {
       console.error('Error fetching hotels:', error);
       Swal.fire({
@@ -26,6 +28,7 @@ const HotelsView = () => {
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#dc3545'
       });
+      return [];
     } finally {
       setLoading(false);
     }
@@ -104,10 +107,19 @@ const HotelsView = () => {
 
   // Actualiza el detalle tras editar
   const actualizarDetalleHotel = async (id) => {
-    await fetchHotels();
-    const hotel = hoteles.find(h => h.id === id);
-    if (hotel) {
-      setHotelDetalle(hotel);
+    try {
+      // Obtenemos los datos actualizados
+      const hotelesData = await api.getHotels();
+      const hotelesOrdenados = hotelesData.sort((a, b) => b.id - a.id);
+      setHoteles(hotelesOrdenados);
+      
+      // Buscamos el hotel actualizado en los datos frescos
+      const hotel = hotelesOrdenados.find(h => h.id === id);
+      if (hotel) {
+        setHotelDetalle(hotel);
+      }
+    } catch (error) {
+      console.error('Error actualizando detalle:', error);
     }
   };
 

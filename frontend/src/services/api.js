@@ -33,6 +33,18 @@ const apiService = {
   // Obtiene todos los tipos de habitación
   getRoomTypes() {
     return axios.get(ROOM_TYPES_API_URL).then(res => res.data);
+  },
+  // Crea un tipo de habitación
+  createRoomType(data) {
+    return axios.post(ROOM_TYPES_API_URL, data);
+  },
+  // Actualiza un tipo de habitación existente
+  updateRoomType(id, data) {
+    return axios.put(`${ROOM_TYPES_API_URL}/${id}`, data);
+  },
+  // Elimina un tipo de habitación por ID
+  deleteRoomType(id) {
+    return axios.delete(`${ROOM_TYPES_API_URL}/${id}`);
   }
 };
 

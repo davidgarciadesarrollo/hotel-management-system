@@ -235,12 +235,22 @@ const HotelForm = forwardRef((props, ref) => {
       if (hotel.id) {
         await api.updateHotel(hotel.id, payload);
         showSuccessAlert('¡Actualizado!', 'El hotel se actualizó correctamente.');
+        
+        // Primero refrescamos la lista y obtenemos los datos actualizados
+        const hotelesActualizados = await onRefresh();
+        // Luego actualizamos el detalle con datos frescos
+        if (onActualizarDetalle && hotelesActualizados) {
+          const hotelActualizado = hotelesActualizados.find(h => h.id === hotel.id);
+          if (hotelActualizado) {
+            // Llamamos la función de actualización de detalle directamente con el hotel actualizado
+            onActualizarDetalle(hotel.id);
+          }
+        }
       } else {
         await api.createHotel(payload);
         showSuccessAlert('¡Registrado!', 'El hotel se registró correctamente.');
+        await onRefresh();
       }
-      onRefresh();
-      onActualizarDetalle(hotel.id);
       onClose();
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
