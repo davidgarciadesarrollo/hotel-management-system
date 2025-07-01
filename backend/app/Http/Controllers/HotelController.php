@@ -27,7 +27,7 @@ class HotelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required',
+            'nombre' => 'required|string|min:3|unique:hotels,nombre',
             'direccion' => 'required',
             'ciudad' => 'required',
             'nit' => 'required|unique:hotels,nit',
@@ -36,6 +36,10 @@ class HotelController extends Controller
             'room_types.*.type' => 'required|string',
             'room_types.*.accommodation' => 'required|string',
             'room_types.*.quantity' => 'required|integer|min:1',
+        ], [
+            'nombre.unique' => 'Ya existe un hotel registrado con este nombre.',
+            'nombre.min' => 'El nombre del hotel debe tener al menos 3 caracteres.',
+            'nit.unique' => 'El NIT ingresado ya está registrado para otro hotel.',
         ]);
 
         // Validar que no haya acomodaciones repetidas para el mismo hotel
@@ -61,6 +65,7 @@ class HotelController extends Controller
     {
         $hotel = Hotel::findOrFail($id);
         $request->validate([
+            'nombre' => 'required|string|min:3|unique:hotels,nombre,' . $hotel->id,
             'direccion' => 'required',
             'ciudad' => 'required',
             'nit' => 'required|unique:hotels,nit,' . $hotel->id, // Permite el mismo NIT del hotel actual
@@ -69,6 +74,10 @@ class HotelController extends Controller
             'room_types.*.type' => 'required|string',
             'room_types.*.accommodation' => 'required|string',
             'room_types.*.quantity' => 'required|integer|min:1',
+        ], [
+            'nombre.unique' => 'Ya existe un hotel registrado con este nombre.',
+            'nombre.min' => 'El nombre del hotel debe tener al menos 3 caracteres.',
+            'nit.unique' => 'El NIT ingresado ya está registrado para otro hotel.',
         ]);
 
         // Validar que no haya acomodaciones repetidas para el mismo hotel

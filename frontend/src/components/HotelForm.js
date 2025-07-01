@@ -19,6 +19,60 @@ const HotelForm = forwardRef((props, ref) => {
     ],
   });
 
+  const [errors, setErrors] = useState({});
+
+  // Función para validar un campo específico
+  const validateField = (field, value) => {
+    const newErrors = { ...errors };
+    
+    switch (field) {
+      case 'nombre':
+        if (!value.trim()) {
+          newErrors.nombre = 'El nombre del hotel es obligatorio';
+        } else if (value.trim().length < 3) {
+          newErrors.nombre = 'El nombre debe tener al menos 3 caracteres';
+        } else {
+          delete newErrors.nombre;
+        }
+        break;
+      case 'direccion':
+        if (!value.trim()) {
+          newErrors.direccion = 'La dirección es obligatoria';
+        } else {
+          delete newErrors.direccion;
+        }
+        break;
+      case 'ciudad':
+        if (!value.trim()) {
+          newErrors.ciudad = 'La ciudad es obligatoria';
+        } else {
+          delete newErrors.ciudad;
+        }
+        break;
+      case 'nit':
+        if (!value.trim()) {
+          newErrors.nit = 'El NIT es obligatorio';
+        } else if (!/^\d+$/.test(value.trim())) {
+          newErrors.nit = 'El NIT debe contener solo números';
+        } else {
+          delete newErrors.nit;
+        }
+        break;
+      case 'numero_habitaciones':
+        if (!value || value <= 0) {
+          newErrors.numero_habitaciones = 'El número de habitaciones debe ser mayor a 0';
+        } else {
+          delete newErrors.numero_habitaciones;
+        }
+        break;
+      default:
+        break;
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   useImperativeHandle(ref, () => ({
     setHotel: (hotelData) => {
       const tipos = ['ESTANDAR', 'JUNIOR', 'SUITE'];
@@ -94,6 +148,9 @@ const HotelForm = forwardRef((props, ref) => {
       ...prev,
       [field]: value
     }));
+    
+    // Validar el campo en tiempo real
+    validateField(field, value);
   };
 
   const handleRoomTypeChange = (index, field, value) => {
@@ -110,6 +167,38 @@ const HotelForm = forwardRef((props, ref) => {
    */
   const submitForm = async (e) => {
     e.preventDefault();
+    
+    // Validación: campos obligatorios
+    if (!hotel.nombre.trim()) {
+      showWarningAlert('Campo requerido', 'El nombre del hotel es obligatorio.');
+      return;
+    }
+    
+    if (!hotel.direccion.trim()) {
+      showWarningAlert('Campo requerido', 'La dirección del hotel es obligatoria.');
+      return;
+    }
+    
+    if (!hotel.ciudad.trim()) {
+      showWarningAlert('Campo requerido', 'La ciudad del hotel es obligatoria.');
+      return;
+    }
+    
+    if (!hotel.nit.trim()) {
+      showWarningAlert('Campo requerido', 'El NIT del hotel es obligatorio.');
+      return;
+    }
+    
+    if (hotel.numero_habitaciones <= 0) {
+      showWarningAlert('Valor inválido', 'El número de habitaciones debe ser mayor a 0.');
+      return;
+    }
+    
+    // Validación: verificar que el nombre no sea solo números o caracteres especiales
+    if (hotel.nombre.trim().length < 3) {
+      showWarningAlert('Nombre inválido', 'El nombre del hotel debe tener al menos 3 caracteres.');
+      return;
+    }
     
     // Validación: la suma de habitaciones por tipo debe ser igual al total
     const total = hotel.roomTypes.reduce((sum, rt) => sum + Number(rt.quantity), 0);
@@ -157,8 +246,15 @@ const HotelForm = forwardRef((props, ref) => {
       if (error.response && error.response.data && error.response.data.errors) {
         const errors = error.response.data.errors;
         
+        // Manejar error de nombre duplicado
+        if (errors.nombre) {
+          showErrorAlert(
+            'Nombre duplicado',
+            'Ya existe un hotel registrado con este nombre. Por favor elige un nombre diferente.'
+          );
+        }
         // Manejar error de NIT duplicado
-        if (errors.nit) {
+        else if (errors.nit) {
           showErrorAlert(
             'NIT duplicado',
             'El NIT ingresado ya está registrado para otro hotel.'
@@ -198,13 +294,18 @@ const HotelForm = forwardRef((props, ref) => {
             <label htmlFor="nombre" className="form-label">Nombre del Hotel</label>
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${errors.nombre ? 'is-invalid' : ''}`}
               id="nombre"
               value={hotel.nombre}
               onChange={(e) => handleInputChange('nombre', e.target.value)}
               placeholder="Ej: Hotel Central"
               required
             />
+            {errors.nombre && (
+              <div className="invalid-feedback">
+                {errors.nombre}
+              </div>
+            )}
             <div className="form-text">Ingrese el nombre oficial del hotel.</div>
           </div>
           <div className="col-md-6">
