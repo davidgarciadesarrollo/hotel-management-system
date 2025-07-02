@@ -506,7 +506,7 @@ const RoomTypeForm = forwardRef(({ onClose, onRefresh, onActualizarDetalle }, re
                     className={`form-select ${errors.type ? 'is-invalid' : ''}`}
                     value={formData.type}
                     onChange={handleChange}
-                    required
+                    disabled
                   >
                     <option value="">Seleccione un tipo</option>
                     {tiposHabitacion.map(tipo => (
