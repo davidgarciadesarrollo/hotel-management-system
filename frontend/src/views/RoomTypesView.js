@@ -13,9 +13,9 @@ const RoomTypesView = () => {
 
   // Reglas de compatibilidad tipo-acomodación
   const compatibilityRules = {
-    'ESTÁNDAR': ['SENCILLA', 'DOBLE'],
-    'JUNIOR': ['TRIPLE', 'CUÁDRUPLE'],
-    'SUITE': ['SENCILLA', 'DOBLE', 'TRIPLE']
+    'ESTÁNDAR': ['Sencilla	', 'Doble'],
+    'JUNIOR': ['Triple', 'Cuádruple'],
+    'SUITE': ['Sencilla	', 'Doble', 'Triple']
   };
 
   // Carga la lista de tipos de habitación
@@ -159,7 +159,7 @@ const RoomTypesView = () => {
                 <small className="text-muted">
                   <i className="bi bi-lightbulb me-1"></i>
                   <strong>Nota:</strong> Estas reglas garantizan que las acomodaciones sean lógicamente compatibles con cada tipo de habitación. 
-                  Por ejemplo, una habitación ESTÁNDAR no puede tener acomodación CUÁDRUPLE.
+                  Por ejemplo, una habitación ESTÁNDAR no puede tener acomodación Cuádruple.
                 </small>
               </div>
             </div>

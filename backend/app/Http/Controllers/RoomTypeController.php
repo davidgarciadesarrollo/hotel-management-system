@@ -110,10 +110,10 @@ class RoomTypeController extends Controller
         if ($existingRoomType) {
             $hotel = Hotel::find($request->hotel_id);
             $accommodationTranslations = [
-                'SENCILLA' => 'Sencilla (1 persona)',
-                'DOBLE' => 'Doble (2 personas)',
-                'TRIPLE' => 'Triple (3 personas)',
-                'CUÁDRUPLE' => 'Cuádruple (4 personas)'
+                'Sencilla	' => 'Sencilla	 (1 persona)',
+                'Doble' => 'Doble (2 personas)',
+                'Triple' => 'Triple (3 personas)',
+                'Cuádruple' => 'Cuádruple (4 personas)'
             ];
             
             $accommodationName = $accommodationTranslations[$request->accommodation] ?? $request->accommodation;
@@ -169,21 +169,21 @@ class RoomTypeController extends Controller
      * las acomodaciones sean lógicamente compatibles con los tipos de habitación.
      * 
      * Reglas implementadas:
-     * - ESTÁNDAR: Solo permite SENCILLA y DOBLE (habitaciones básicas 1-2 personas)
-     * - JUNIOR: Permite TRIPLE y CUÁDRUPLE (habitaciones intermedias 3-4 personas)  
-     * - SUITE: Permite SENCILLA, DOBLE y TRIPLE (habitaciones premium 1-3 personas)
+     * - ESTÁNDAR: Solo permite Sencilla	 y Doble (habitaciones básicas 1-2 personas)
+     * - JUNIOR: Permite Triple y Cuádruple (habitaciones intermedias 3-4 personas)  
+     * - SUITE: Permite Sencilla	, Doble y Triple (habitaciones premium 1-3 personas)
      * 
      * @param string $type Tipo de habitación (ESTÁNDAR, JUNIOR, SUITE)
-     * @param string $accommodation Acomodación (SENCILLA, DOBLE, TRIPLE, CUÁDRUPLE)
+     * @param string $accommodation Acomodación (Sencilla	, Doble, Triple, Cuádruple)
      * 
      * @throws ValidationException Si el tipo no existe o la combinación no es válida
      * 
      * @example
      * // Caso válido
-     * $this->validateTypeAccommodationCompatibility('SUITE', 'TRIPLE'); // ✅ Pasa
+     * $this->validateTypeAccommodationCompatibility('SUITE', 'Triple'); // ✅ Pasa
      * 
      * // Caso inválido  
-     * $this->validateTypeAccommodationCompatibility('ESTÁNDAR', 'CUÁDRUPLE'); // ❌ Falla
+     * $this->validateTypeAccommodationCompatibility('ESTÁNDAR', 'Cuádruple'); // ❌ Falla
      * 
      * @since 2.1
      */
@@ -194,12 +194,12 @@ class RoomTypeController extends Controller
         
         // Definir reglas de compatibilidad
         $compatibilityRules = [
-            'ESTÁNDAR' => ['SENCILLA', 'DOBLE'],
-            'ESTANDAR' => ['SENCILLA', 'DOBLE'],
-            'EST\\u00c1NDAR' => ['SENCILLA', 'DOBLE'],
-            'EST\u00c1NDAR' => ['SENCILLA', 'DOBLE'],
-            'JUNIOR' => ['TRIPLE', 'CUÁDRUPLE'],
-            'SUITE' => ['SENCILLA', 'DOBLE', 'TRIPLE']
+            'ESTÁNDAR' => ['Sencilla	', 'Doble'],
+            'ESTANDAR' => ['Sencilla	', 'Doble'],
+            'EST\\u00c1NDAR' => ['Sencilla	', 'Doble'],
+            'EST\u00c1NDAR' => ['Sencilla	', 'Doble'],
+            'JUNIOR' => ['Triple', 'Cuádruple'],
+            'SUITE' => ['Sencilla	', 'Doble', 'Triple']
         ];
 
         // Verificar si el tipo existe en las reglas

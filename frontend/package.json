@@ -12,7 +12,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0",
     "react-scripts": "^5.0.1",
-    "sweetalert2": "^11.6.12",
+    "sweetalert2": "^11.22.2",
     "web-vitals": "^4.2.4"
   },
   "scripts": {

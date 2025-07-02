@@ -105,9 +105,9 @@ const HotelForm = forwardRef((props, ref) => {
    */
   const getAccommodationOptions = (type) => {
     const options = {
-      ESTANDAR: ['Sencilla', 'Doble'],
+      ESTANDAR: ['Sencilla	', 'Doble'],
       JUNIOR: ['Triple', 'Cuádruple'],
-      SUITE: ['Sencilla', 'Doble', 'Triple'],
+      SUITE: ['Sencilla	', 'Doble', 'Triple'],
     };
     return options[type] || [];
   };

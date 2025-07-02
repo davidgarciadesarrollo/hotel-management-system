@@ -14,9 +14,9 @@ import Swal from 'sweetalert2';
  * - Mensajes de ayuda contextuales
  * 
  * Reglas de compatibilidad implementadas:
- * - ESTÁNDAR: SENCILLA, DOBLE
- * - JUNIOR: SENCILLA, DOBLE, TRIPLE  
- * - SUITE: DOBLE, TRIPLE, CUÁDRUPLE
+ * - ESTÁNDAR: Sencilla	, Doble
+ * - JUNIOR: Sencilla	, Doble, Triple  
+ * - SUITE: Doble, Triple, Cuádruple
  * 
  * @param {Object} props.onClose - Función para cerrar el formulario
  * @param {Object} props.onRefresh - Función para refrescar la lista principal
@@ -56,9 +56,9 @@ const RoomTypeForm = forwardRef(({ onClose, onRefresh, onActualizarDetalle }, re
    * en RoomTypeController.php
    */
   const compatibilityRules = {
-    'ESTÁNDAR': ['SENCILLA', 'DOBLE'],
-    'JUNIOR': ['TRIPLE', 'CUÁDRUPLE'],
-    'SUITE': ['SENCILLA', 'DOBLE', 'TRIPLE']
+    'ESTÁNDAR': ['Sencilla	', 'Doble'],
+    'JUNIOR': ['Triple', 'Cuádruple'],
+    'SUITE': ['Sencilla	', 'Doble', 'Triple']
   };
 
   /**
@@ -67,22 +67,22 @@ const RoomTypeForm = forwardRef(({ onClose, onRefresh, onActualizarDetalle }, re
    * @returns {string[]} Array de acomodaciones permitidas para el tipo actual
    * @example
    * // Si formData.type === 'ESTÁNDAR'
-   * getAvailableAccommodations() // Returns: ['SENCILLA', 'DOBLE']
+   * getAvailableAccommodations() // Returns: ['Sencilla	', 'Doble']
    */
   const getAvailableAccommodations = () => {
     if (!formData.type) return [];
     
     // Solución directa: verificar si contiene "EST" para ESTÁNDAR
     if (formData.type.includes('EST')) {
-      return ['SENCILLA', 'DOBLE'];
+      return ['Sencilla	', 'Doble'];
     }
     
     if (formData.type === 'JUNIOR') {
-      return ['TRIPLE', 'CUÁDRUPLE'];
+      return ['Triple', 'Cuádruple'];
     }
     
     if (formData.type === 'SUITE') {
-      return ['SENCILLA', 'DOBLE', 'TRIPLE'];
+      return ['Sencilla	', 'Doble', 'Triple'];
     }
     
     return [];
@@ -142,10 +142,10 @@ const RoomTypeForm = forwardRef(({ onClose, onRefresh, onActualizarDetalle }, re
     }
     
     const accommodationTranslations = {
-      'SENCILLA': 'Sencilla (1 persona)',
-      'DOBLE': 'Doble (2 personas)', 
-      'TRIPLE': 'Triple (3 personas)',
-      'CUÁDRUPLE': 'Cuádruple (4 personas)'
+      'Sencilla	': 'Sencilla	 (1 persona)',
+      'Doble': 'Doble (2 personas)', 
+      'Triple': 'Triple (3 personas)',
+      'Cuádruple': 'Cuádruple (4 personas)'
     };
     
     const occupiedList = occupied.map(item => {
@@ -442,9 +442,9 @@ const RoomTypeForm = forwardRef(({ onClose, onRefresh, onActualizarDetalle }, re
               <div class="alert alert-warning mt-3 mb-0" style="font-size: 0.9em;">
                 <h6 class="alert-heading mb-2">⚠️ Reglas de Compatibilidad:</h6>
                 <ul class="mb-0">
-                  <li><strong>ESTÁNDAR:</strong> Solo Sencilla o Doble</li>
+                  <li><strong>ESTÁNDAR:</strong> Solo Sencilla	 o Doble</li>
                   <li><strong>JUNIOR:</strong> Solo Triple o Cuádruple</li>
-                  <li><strong>SUITE:</strong> Sencilla, Doble o Triple</li>
+                  <li><strong>SUITE:</strong> Sencilla	, Doble o Triple</li>
                 </ul>
               </div>` : ''
             }
@@ -537,10 +537,10 @@ const RoomTypeForm = forwardRef(({ onClose, onRefresh, onActualizarDetalle }, re
                     </option>
                     {getAvailableAccommodations().map(acomodacion => (
                       <option key={acomodacion} value={acomodacion}>
-                        {acomodacion === 'SENCILLA' ? 'Sencilla (1 persona)' :
-                         acomodacion === 'DOBLE' ? 'Doble (2 personas)' :
-                         acomodacion === 'TRIPLE' ? 'Triple (3 personas)' :
-                         acomodacion === 'CUÁDRUPLE' ? 'Cuádruple (4 personas)' :
+                        {acomodacion === 'Sencilla	' ? 'Sencilla	 (1 persona)' :
+                         acomodacion === 'Doble' ? 'Doble (2 personas)' :
+                         acomodacion === 'Triple' ? 'Triple (3 personas)' :
+                         acomodacion === 'Cuádruple' ? 'Cuádruple (4 personas)' :
                          acomodacion}
                       </option>
                     ))}

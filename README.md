@@ -352,13 +352,13 @@ cp -r build/* /var/www/html/
 **Una acomodación solo puede existir una vez por hotel, sin importar el tipo de habitación.**
 
 #### ✅ **Casos válidos para el mismo hotel:**
-- Estándar + Sencilla
+- Estándar + Sencilla	
 - Suite + Doble  
 - Premium + Triple
 
 #### ❌ **Casos NO válidos para el mismo hotel:**
-- Estándar + Sencilla
-- Suite + Sencilla ← **DUPLICADO!**
+- Estándar + Sencilla	
+- Suite + Sencilla	 ← **DUPLICADO!**
 
 ### 🔧 **Implementación técnica:**
 - **Base de datos**: Índice único `hotel_id + accommodation`
@@ -375,25 +375,25 @@ La aplicación ahora valida automáticamente que las acomodaciones sean lógicam
 
 | Tipo de Habitación | Acomodaciones Permitidas |
 |-------------------|-------------------------|
-| **ESTÁNDAR** | SENCILLA, DOBLE |
-| **JUNIOR** | TRIPLE, CUÁDRUPLE |
-| **SUITE** | SENCILLA, DOBLE, TRIPLE |
+| **ESTÁNDAR** | Sencilla	, Doble |
+| **JUNIOR** | Triple, Cuádruple |
+| **SUITE** | Sencilla	, Doble, Triple |
 
 ### ✅ **Ejemplos de Combinaciones VÁLIDAS:**
-- ✅ Habitación ESTÁNDAR con acomodación SENCILLA
-- ✅ Habitación ESTÁNDAR con acomodación DOBLE
-- ✅ Habitación JUNIOR con acomodación TRIPLE
-- ✅ Habitación JUNIOR con acomodación CUÁDRUPLE
-- ✅ Habitación SUITE con acomodación SENCILLA
-- ✅ Habitación SUITE con acomodación DOBLE
-- ✅ Habitación SUITE con acomodación TRIPLE
+- ✅ Habitación ESTÁNDAR con acomodación Sencilla	
+- ✅ Habitación ESTÁNDAR con acomodación Doble
+- ✅ Habitación JUNIOR con acomodación Triple
+- ✅ Habitación JUNIOR con acomodación Cuádruple
+- ✅ Habitación SUITE con acomodación Sencilla	
+- ✅ Habitación SUITE con acomodación Doble
+- ✅ Habitación SUITE con acomodación Triple
 
 ### ❌ **Ejemplos de Combinaciones NO VÁLIDAS:**
-- ❌ Habitación ESTÁNDAR con acomodación TRIPLE
-- ❌ Habitación ESTÁNDAR con acomodación CUÁDRUPLE
-- ❌ Habitación JUNIOR con acomodación SENCILLA
-- ❌ Habitación JUNIOR con acomodación DOBLE
-- ❌ Habitación SUITE con acomodación CUÁDRUPLE
+- ❌ Habitación ESTÁNDAR con acomodación Triple
+- ❌ Habitación ESTÁNDAR con acomodación Cuádruple
+- ❌ Habitación JUNIOR con acomodación Sencilla	
+- ❌ Habitación JUNIOR con acomodación Doble
+- ❌ Habitación SUITE con acomodación Cuádruple
 
 ### 🔧 **Implementación Técnica:**
 
@@ -419,7 +419,7 @@ La aplicación ahora valida automáticamente que las acomodaciones sean lógicam
 ### 💡 **Beneficios**
 1. **Prevención de errores**: Evita combinaciones ilógicas
 2. **Experiencia mejorada**: Interfaz intuitiva y guiada
-3. **Integridad de datos**: Validación doble (frontend + backend)
+3. **Integridad de datos**: Validación Doble (frontend + backend)
 4. **Mensajes claros**: Feedback específico al usuario
 
 ---

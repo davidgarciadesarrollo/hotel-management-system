@@ -12,9 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🔧 Changed - Actualización de Reglas de Compatibilidad
 
 #### **Nuevas Reglas de Compatibilidad Tipo-Acomodación**
-- **ESTÁNDAR**: SENCILLA, DOBLE (sin cambios)
-- **JUNIOR**: TRIPLE, CUÁDRUPLE (actualizado - antes permitía SENCILLA, DOBLE, TRIPLE)
-- **SUITE**: SENCILLA, DOBLE, TRIPLE (actualizado - antes permitía DOBLE, TRIPLE, CUÁDRUPLE)
+- **ESTÁNDAR**: Sencilla	, Doble (sin cambios)
+- **JUNIOR**: Triple, Cuádruple (actualizado - antes permitía Sencilla	, Doble, Triple)
+- **SUITE**: Sencilla	, Doble, Triple (actualizado - antes permitía Doble, Triple, Cuádruple)
 
 #### **Cambios Aplicados**
 - **Backend**: Actualizado `RoomTypeController.php` con nuevas reglas
@@ -39,9 +39,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Nueva funcionalidad**: Validación automática de compatibilidad entre tipos de habitación y acomodaciones
 - **Nuevo método**: `validateTypeAccommodationCompatibility()` en `RoomTypeController.php`
 - **Reglas de negocio implementadas**:
-  - **ESTÁNDAR**: Solo permite SENCILLA y DOBLE
-  - **JUNIOR**: Permite SENCILLA, DOBLE y TRIPLE  
-  - **SUITE**: Permite DOBLE, TRIPLE y CUÁDRUPLE
+  - **ESTÁNDAR**: Solo permite Sencilla	 y Doble
+  - **JUNIOR**: Permite Sencilla	, Doble y Triple  
+  - **SUITE**: Permite Doble, Triple y Cuádruple
 - **Mensajes de error mejorados**: Descripciones claras con acomodaciones permitidas
 - **Validación dual**: En métodos `store()` y `update()`
 

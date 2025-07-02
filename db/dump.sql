@@ -382,7 +382,7 @@ COPY public.personal_access_tokens (id, tokenable_type, tokenable_id, name, toke
 COPY public.room_types (id, hotel_id, type, quantity, accommodation, created_at, updated_at) FROM stdin;
 28	1	ESTANDAR	5	Doble	2025-06-29 19:38:59	2025-06-29 19:38:59
 29	1	JUNIOR	5	Cuádruple	2025-06-29 19:38:59	2025-06-29 19:38:59
-30	1	SUITE	5	Sencilla	2025-06-29 19:38:59	2025-06-29 19:38:59
+30	1	SUITE	5	Sencilla		2025-06-29 19:38:59	2025-06-29 19:38:59
 \.
 
 

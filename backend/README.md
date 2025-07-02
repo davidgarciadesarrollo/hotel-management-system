@@ -32,9 +32,9 @@ Backend desarrollado en Laravel que proporciona una API RESTful completa para la
 #### **Reglas de Compatibilidad Tipo-Acomodación**
 | Tipo de Habitación | Acomodaciones Permitidas |
 |-------------------|-------------------------|
-| **ESTÁNDAR** | SENCILLA, DOBLE |
-| **JUNIOR** | TRIPLE, CUÁDRUPLE |
-| **SUITE** | SENCILLA, DOBLE, TRIPLE |
+| **ESTÁNDAR** | Sencilla	, Doble |
+| **JUNIOR** | Triple, Cuádruple |
+| **SUITE** | Sencilla	, Doble, Triple |
 
 #### **Reglas de Unicidad**
 - Una acomodación solo puede existir una vez por hotel
@@ -177,9 +177,9 @@ DELETE /api/room-types/{id} # Eliminar tipo
 private function validateTypeAccommodationCompatibility($type, $accommodation)
 {
     $compatibilityRules = [
-        'ESTÁNDAR' => ['SENCILLA', 'DOBLE'],
-        'JUNIOR' => ['TRIPLE', 'CUÁDRUPLE'],
-        'SUITE' => ['SENCILLA', 'DOBLE', 'TRIPLE']
+        'ESTÁNDAR' => ['Sencilla	', 'Doble'],
+        'JUNIOR' => ['Triple', 'Cuádruple'],
+        'SUITE' => ['Sencilla	', 'Doble', 'Triple']
     ];
 
     if (!in_array($accommodation, $compatibilityRules[$type])) {
@@ -200,7 +200,7 @@ private function validateTypeAccommodationCompatibility($type, $accommodation)
 POST /api/room-types
 {
   "type": "ESTÁNDAR",
-  "accommodation": "DOBLE",
+  "accommodation": "Doble",
   "hotel_id": 1,
   "quantity": 5
 }
@@ -209,7 +209,7 @@ POST /api/room-types
 POST /api/room-types
 {
   "type": "JUNIOR", 
-  "accommodation": "TRIPLE",
+  "accommodation": "Triple",
   "hotel_id": 1,
   "quantity": 2
 }
@@ -217,11 +217,11 @@ POST /api/room-types
 
 #### ❌ **Inválidos**
 ```bash
-# Junior con Sencilla (incompatible)
+# Junior con Sencilla	 (incompatible)
 POST /api/room-types
 {
   "type": "JUNIOR",
-  "accommodation": "SENCILLA",  # ❌ Error 422
+  "accommodation": "Sencilla	",  # ❌ Error 422
   "hotel_id": 1,
   "quantity": 3
 }
@@ -230,7 +230,7 @@ POST /api/room-types
 POST /api/room-types
 {
   "type": "SUITE",
-  "accommodation": "DOBLE",
+  "accommodation": "Doble",
   "hotel_id": 1,
   "quantity": 5  # ❌ Error 422 - Solo disponibles 3
 }
